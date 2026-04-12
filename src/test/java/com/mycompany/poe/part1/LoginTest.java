@@ -1,4 +1,3 @@
-
 package com.mycompany.poe.part1;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,5 +88,15 @@ public class LoginTest {
         assertEquals("Welcome Kyle,Smith it is great to see you again.", result);
        
     }
-   
+   /**
+     * Test of CellPhoneNumber method, of class Login.
+     */
+    @org.junit.jupiter.api.Test
+    public void testCellPhoneNumber(){
+        Login instance = new Login();
+        
+        assertTrue(instance.checkCellPhoneNumber("+27831234567"));
+        assertFalse(instance.checkCellPhoneNumber("0831234567"));
+                
+    }
 }

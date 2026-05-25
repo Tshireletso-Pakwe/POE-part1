@@ -21,7 +21,7 @@ public class Login {
    public boolean 
            checkCellPhoneNumber(String number)
     {
-        return number.matches("^\\=27\\d{9}$");
+        return number.matches("^\\+27\\d{9}$");
     }
                    
 //   i used the if-statement to make sure that the user's input is correct and meets the conditions/requirements needed. 
@@ -60,7 +60,7 @@ public class Login {
                 returnLoginStatus(boolean 
                         isLoggedIn){
                     if (isLoggedIn){
-                return "Welcome" + firstName+ ","+ lastName+ "it is great to see you again.";
+                return "Welcome" + firstName + ","+ lastName + "it is great to see you again.";
                     }
                     else{
                 return"Username or password incorrect,please try again.";

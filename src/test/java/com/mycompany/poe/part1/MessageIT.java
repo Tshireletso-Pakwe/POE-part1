@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package com.mycompany.poe.part1;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -20,21 +14,7 @@ public class MessageIT {
     public MessageIT() {
     }
     
-    @BeforeAll
-    public static void setUpClass() {
-    }
     
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
 
     /**
      * Test of checkMessageID method, of class Message.
@@ -42,13 +22,12 @@ public class MessageIT {
     @Test
     public void testCheckMessageID() {
         System.out.println("checkMessageID");
-        String messageID = "";
         Message instance = new Message();
-        boolean expResult = true;
-        boolean result = instance.checkMessageID(1234567890);
-        assertTrue(result);
-
-    }
+        //test to check if the ID is valid and is under 10 characters
+        assertTrue(instance.checkMessageID("MSG123"));
+        //test to check if the ID is valid and is over 10 characters
+        assertFalse(instance.checkMessageID("THISISAYTOOLONGFORSYSTEM"));
+}
 
     /**
      * Test of checkRecipientCell method, of class Message.
@@ -56,11 +35,13 @@ public class MessageIT {
     @Test
     public void testCheckRecipientCell() {
         System.out.println("checkRecipientCell");
-        String cellNumber = "";
         Message instance = new Message();
-        String expResult = "Cell number successfully captured.";
-        String result = instance.checkRecipientCell("+27831234567");
-        assertEquals(expResult, result);
+        //test to check if this is a valid and is the SA international phone sequence
+        assertTrue(instance.checkRecipientCell("+27831234567"));
+        //test invalid due to missing code 
+        assertFalse(instance.checkRecipientCell("0831234567"));
+        
+        
         
     }
 
@@ -118,5 +99,88 @@ public class MessageIT {
         int result = instance.returnTotalMessages(5);
         assertEquals(expResult, result);
            }
+
+    /**
+     * Test of saveMessageToJSON method, of class Message.
+     */
+    @Test
+    public void testSaveMessageToJSON() {
+        System.out.println("saveMessageToJSON");
+        Message instance = new Message();
+        instance.saveMessageToJSON();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of displayReport method, of class Message.
+     */
+    @Test
+    public void testDisplayReport() {
+        System.out.println("displayReport");
+        Message instance = new Message();
+        String expResult = "";
+        String result = instance.displayReport();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of displayLongestMessage method, of class Message.
+     */
+    @Test
+    public void testDisplayLongestMessage() {
+        System.out.println("displayLongestMessage");
+        Message instance = new Message();
+        String expResult = "";
+        String result = instance.displayLongestMessage();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of searchByMessageID method, of class Message.
+     */
+    @Test
+    public void testSearchByMessageID() {
+        System.out.println("searchByMessageID");
+        String targetID = "";
+        Message instance = new Message();
+        String expResult = "";
+        String result = instance.searchByMessageID(targetID);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSentCount method, of class Message.
+     */
+    @Test
+    public void testGetSentCount() {
+        System.out.println("getSentCount");
+        Message instance = new Message();
+        int expResult = 0;
+        int result = instance.getSentCount();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStoredCount method, of class Message.
+     */
+    @Test
+    public void testGetStoredCount() {
+        System.out.println("getStoredCount");
+        Message instance = new Message();
+        int expResult = 0;
+        int result = instance.getStoredCount();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

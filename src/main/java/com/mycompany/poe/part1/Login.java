@@ -62,3 +62,5 @@ public class Login {
         }
      }
 }
+
+//the getters that will assist with the autamation of unit testing execution paths

@@ -19,7 +19,7 @@ public class Message{
     
     //Array storage counters
     private int sentCount = 0;
-    private int disregarededCount = 0;
+    private int disregardedCount = 0;
     private int storedCount = 0;
     
     
@@ -60,22 +60,103 @@ String lastWord = words[words.length - 1].toUpperCase();
 lastWord = lastWord.replaceAll("[?!.]","");
 return idPrefix + ":" + messageLength + ":" + firstWord + lastWord;
    }
- public String sendMessage (int userSelection){
-   if (userSelection == 1){
-       return "Message successfully sent";
+ public String sendMessage (int userSelection, String msgID, String hash,String cell, String text){
+   if (text == null || text.length() > 250){
+    return "Message exceeds 250 characters; please reduce the size.";   
+   }
+     
+    if (userSelection == 1){
+ // filling in the sent parallel arrays
+     sentMessages[sentCount] = text;
+     messageHashes[sentCount] = hash;
+     messageIDs[sentCount] = msgID;
+     recipients[sentCount] = cell;
+     sentCount++; 
+  return "Message successfully sent";
      }
    else if (userSelection == 2){
+// filling in the disregarded tracker
+    disregardedMessages[disregardedCount] = text;
+    disregardedCount++;
        return "Press 0 to delete the message";
    }
    else if (userSelection == 3){
-       return "Message successfully stored.";
+//filling in the stored parallel arrays
+storedMessages[storedCount] = text;
+messageHashes[storedCount] = hash;
+messageIDs[storedCount] = msgID;
+recipients[storedCount] = cell;
+storedCount++; 
+// It registers this stored array to a local text file
+saveMessageToJSON();
+return "Message successfully stored.";
    }
    return "Invalid option selected.";
  }
+ 
+ public void saveMessageToJSON(){
+     StringBuilder json = new StringBuilder();
+     json.append("[\n");
+ for (int i = 0; i < storedCount; i++){
+   json.append(" {\n"); 
+json.append("\"messageID\":\"").append(messageIDs[i]).append("\",\n");
+json.append("\"messageHash\":\"").append(messageHashes[i]).append("\",\n");
+json.append("\"recipient\":\"").append(recipients[i]).append("\",\n");
+json.append("\"messageText\":\"").append(storedMessages[i]).append("\"\n");
+json.append(" }").append(i < storedCount - 1 ? ",\n" : "\n");
+ }
+json.append("]");
+
+
+try (FileWriter fileWriter = new FileWriter("stored_messages.json")){
+    fileWriter.write(json.toString());
+ System.out.println("[SYSTEM LOG] Local Json tracking matrix updated");
+}
+catch (IOException e) {
+    System.out.println("System execution error writing file tracking logs.");
+}
+}
+         
+ public String displayReport(){
+     if (sentCount == 0) return "No messages sent yet.";
+   StringBuilder report = new StringBuilder();
+for (int i = 0; i < sentCount; i++){
+ report.append("Hash: ").append(messageHashes[i])
+ .append(" | Recipient: ").append(recipients[i])
+ .append(" | Message: ").append(sentMessages[i]).append("\n");
+}
+return report.toString();
+ }
+ public String displayLongestMessage(){
+     String longest = "";
+     for(int i = 0; i < sentCount; i++){
+     if (sentMessages[i] !=null && sentMessages[i].length() > longest.length()) longest= sentMessages[i];
+}
+     for (int i= 0; i < storedCount; i++){
+     if(storedMessages[i] !=null && storedMessages[i].length() > longest.length()) longest= storedMessages[i];
+}
+   return longest.isEmpty() ? "No messages found." : longest;  
+ }
+ public String searchByMessageID(String targetID){
+     for(int i = 0; i < sentCount; i++){
+         if(targetID.equals(messageIDs[i])) return "It is dinner time!";
+}
+     for (int i = 0; i < storedCount; i++){
+      if (targetID.equals(messageIDs[i])) return "IT is dinner time!";
+}
+     return "Message ID target mismatch.";
+ }
+  public int returnTotalMessages(int totalSent){
+      return sentCount + storedCount;
+  }
+  
+  public int getSentCount(){ return sentCount;}
+  public int getStoredCount() { return storedCount;}
+ 
+ 
+ 
+ 
    public String printMessages(String allMessagesSummary){
        return allMessagesSummary;
    }
-public int returnTotalMessages(int totalSent){
-    return totalSent;
-}
 }

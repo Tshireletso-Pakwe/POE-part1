@@ -40,10 +40,7 @@ public class MessageIT {
         assertTrue(instance.checkRecipientCell("+27831234567"));
         //test invalid due to missing code 
         assertFalse(instance.checkRecipientCell("0831234567"));
-        
-        
-        
-    }
+        }
 
     /**
      * Test of createMessageHash method, of class Message.
@@ -51,15 +48,11 @@ public class MessageIT {
     @Test
     public void testCreateMessageHash() {
         System.out.println("createMessageHash");
-        String messageID = "";
-        int numSentMessages = 0;
-        String messageText = "";
         Message instance = new Message();
-        String expResult = "00:1:HELLOWORLD";
-        String result = instance.createMessageHash("0012345678", 1, "HELLO WORLD");
+        String expResult = "00:11:HELLOWORLD";
+        String result = instance.createMessageHash("0012345678", "HELLO WORLD");
         assertEquals(expResult, result);
-        
-    }
+        }
 
     /**
      * Test of sendMessage method, of class Message.
@@ -67,12 +60,11 @@ public class MessageIT {
     @Test
     public void testSendMessage() {
         System.out.println("sendMessage");
-        int userSelection = 0;
         Message instance = new Message();
         String expResult = "Message successfully sent";
-        String result = instance.sendMessage(1);
+        String result = instance.sendMessage(1, "ID01", "HASH01", "+27831234567", "Testing active message payload transmission.");
         assertEquals(expResult, result);
-           }
+         }
 
     /**
      * Test of printMessages method, of class Message.
@@ -80,10 +72,9 @@ public class MessageIT {
     @Test
     public void testPrintMessages() {
         System.out.println("printMessages");
-        String allMessagesSummary = "";
         Message instance = new Message();
-        String expResult = "Test Summary";
-        String result = instance.printMessages("Test Summary");
+        String expResult = "Test Summary Data Stream";
+        String result = instance.printMessages("Test Summary Data Stream");
         assertEquals(expResult, result);
             }
 
@@ -93,10 +84,11 @@ public class MessageIT {
     @Test
     public void testReturnTotalMessages() {
         System.out.println("returnTotalMessages");
-        int totalSent = 0;
         Message instance = new Message();
-        int expResult = 5;
-        int result = instance.returnTotalMessages(5);
+        instance.sendMessage(1, "M1", "H1", "+27831234567", "First data unit.");
+        instance.sendMessage(3, "M2", "H2", "+2783124567", "Second data unit saved.");
+        int expResult = 2;
+        int result = instance.returnTotalMessages();
         assertEquals(expResult, result);
            }
 
@@ -107,10 +99,11 @@ public class MessageIT {
     public void testSaveMessageToJSON() {
         System.out.println("saveMessageToJSON");
         Message instance = new Message();
-        instance.saveMessageToJSON();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        instance.sendMessage(3, "JSONID", "HASHJSON", "+27831234567", "Testing active JSON payload serialization.");
+        assertDoesNotThrow(()-> {
+            instance.saveMessageToJSON();
+  });
+ }
 
     /**
      * Test of displayReport method, of class Message.
@@ -119,12 +112,11 @@ public class MessageIT {
     public void testDisplayReport() {
         System.out.println("displayReport");
         Message instance = new Message();
-        String expResult = "";
+        instance.sendMessage(1, "R1", "HR1", "+27831234567", "Report payload.");
         String result = instance.displayReport();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        assertTrue(result.contains("Hash:HR1"));
+        assertTrue(result.contains("Recipient: +27831234567"));
+        }
 
     /**
      * Test of displayLongestMessage method, of class Message.
@@ -133,11 +125,12 @@ public class MessageIT {
     public void testDisplayLongestMessage() {
         System.out.println("displayLongestMessage");
         Message instance = new Message();
-        String expResult = "";
+        instance.sendMessage(1, "S1", "HS1", "+27831234567", "Short payload");
+        instance.sendMessage(1, "S2", "HS2", "+27831234567", "THis is clearly the longest messsage payload stream inside the array tracker.");
+        String expResult = "This is clearly the longest message payload stream inside the array tracker.";
         String result = instance.displayLongestMessage();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -148,11 +141,11 @@ public class MessageIT {
         System.out.println("searchByMessageID");
         String targetID = "";
         Message instance = new Message();
-        String expResult = "";
-        String result = instance.searchByMessageID(targetID);
+        instance.sendMessage(1, "FINDME", "HASHSEARCH", "+27831234567", "Target text information block.");
+        String expResult = "It is dinner time";
+        String result = instance.searchByMessageID("FINDME");
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -162,12 +155,10 @@ public class MessageIT {
     public void testGetSentCount() {
         System.out.println("getSentCount");
         Message instance = new Message();
-        int expResult = 0;
-        int result = instance.getSentCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        instance.sendMessage(1, "T1", "H1", "+27831234567", "Sent item");
+
+        assertEquals(1, instance.getSentCount());
+            }
 
     /**
      * Test of getStoredCount method, of class Message.
@@ -176,11 +167,9 @@ public class MessageIT {
     public void testGetStoredCount() {
         System.out.println("getStoredCount");
         Message instance = new Message();
-        int expResult = 0;
-        int result = instance.getStoredCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.sendMessage(3, "T2", "H2", "+27831234567", "Stored item");
+        assertEquals(1, instance.getStoredCount());
+        
     }
     
 }

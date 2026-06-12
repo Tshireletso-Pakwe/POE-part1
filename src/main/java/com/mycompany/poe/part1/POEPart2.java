@@ -4,9 +4,14 @@ import java.util.Scanner;
 import com.mycompany.poe.part1.Login;
 public class POEPart1 {
 
+ /**
+  * Part 3 Main applications center
+  * It will manage the interactive console workflows, data captures and analytical menu reporting
+  * @author Tshireletso
+  */   
+    
     public static void main(String[] args) {
       Scanner sc= new Scanner(System.in);
-      
       Login loginLogic = new Login();
 //      Part 1: REGISTRATION
       
@@ -27,36 +32,30 @@ public class POEPart1 {
             String phone =
                     sc.nextLine();
         
-   String
-           registrationMessage =
-           loginLogic.registerUser(username, password,firstName, lastName,phone);
-   
+   String registrationMessage = loginLogic.registerUser(username, password,firstName, lastName,phone);
    System.out.println("\nStatus:"+ registrationMessage);
-        if
-                (registrationMessage.equals("Username and password successfully captured."))
-        {
+        if (registrationMessage.equals("Username and password successfully captured.")){
+            System.out.println("\n-- User Login --");
             System.out.print("Enter Username: ");
-            String loginUser =
-                    sc.nextLine();
+            String loginUser = sc.nextLine();
             System.out.print("Enter Password: ");
-            String loginPass =
-                    sc.nextLine();
+            String loginPass = sc.nextLine();
             
-    boolean loginSuccess
-            =loginLogic.loginUser(loginUser, loginPass);
+    boolean loginSuccess = loginLogic.loginUser(loginUser, loginPass);
     System.out.println(loginLogic.returnLoginStatus(loginSuccess));
-//   PART 2: Message Check
+//   PART 2 & 3: Message Engine Execution
 if (loginSuccess){
     Message messageManager = new Message();
-    int totalSuccessfullySent = 0;
-    String systemReportSummary = "";
     System.out.println("\nWelcome to QuickChat.");
     boolean keepRunning = true;
+    
     while (keepRunning) {
         System.out.println("\nSelect a feature from the numeric menu:");
-        System.out.println("1)Send Mesage");
-        System.out.println("2)Show recently sent message - Coming Soon.");
-        System.out.println("3)Quit");
+        System.out.println("1)Send / Process Message");
+        System.out.println("2)Display Full Sent Messages Report");
+        System.out.println("3)View Longest Message Captured");
+        System.out.println("4)Search for Message by ID");
+        System.out.println(5
         System.out.print("Enter choice:");
     int mainChoice = sc.nextInt();
     sc.nextLine();

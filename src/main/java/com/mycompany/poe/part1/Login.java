@@ -61,6 +61,8 @@ public class Login {
                 return"Username or password incorrect,please try again.";
         }
      }
-}
-
+        
 //the getters that will assist with the autamation of unit testing execution paths
+public String getUsername() { return username;}
+public String getPassword() { return password;}
+}

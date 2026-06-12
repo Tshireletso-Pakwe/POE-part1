@@ -55,7 +55,7 @@ if (loginSuccess){
         System.out.println("2)Display Full Sent Messages Report");
         System.out.println("3)View Longest Message Captured");
         System.out.println("4)Search for Message by ID");
-        System.out.println(5
+        System.out.println("5)"
         System.out.print("Enter choice:");
     int mainChoice = sc.nextInt();
     sc.nextLine();

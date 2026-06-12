@@ -55,7 +55,7 @@ if (loginSuccess){
         System.out.println("2)Display Full Sent Messages Report");
         System.out.println("3)View Longest Message Captured");
         System.out.println("4)Search for Message by ID");
-        System.out.println("5)"
+        System.out.println("5)Quit");
         System.out.print("Enter choice:");
     int mainChoice = sc.nextInt();
     sc.nextLine();
@@ -68,13 +68,20 @@ if (mainChoice == 1){
     int messagesProcessedSoFar = 0;
  while (messagesProcessedSoFar < totalMessagesToEnter){
         System.out.println("\n--- Composing Message" + (messagesProcessedSoFar + 1) + "---");
+        //prompt for message ID
+        System.out.print("Enter Message ID (Max 10 characters); ");
+        String msgID = sc.nextLine();
+        if (!messageManager.checkMessageID(msgID)){
+            System.out.println("Invalid Message ID length. Let's retry this entry.");
+            continue;
+        }
 //  Checking Recipient Cell
         System.out.print("Enter recipient cell number: ");
     String recipient = sc.nextLine();
     String cellValidationMessage = messageManager.checkRecipientCell(recipient);
         System.out.println(cellValidationMessage);
 if (cellValidationMessage.contains("incorrectly formatted")){
-        System.out.println("Let's retry this message cintect entry.");
+        System.out.println("Cell phone number is incorrectly formatted.Let's retry this entry.");
  continue;
             }
 //Validation of the length of the message

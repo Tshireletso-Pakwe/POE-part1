@@ -49,12 +49,8 @@ public class Login {
     return "Username and password successfully captured.";               
 }
 //   why i created the attempt user & password info was to use it as a security check to check if it matches the original login info(this.username) stored in the memory.
-        public boolean loginUser(String attemptUser, String attemptPass)  
-    {
-        return this.username !=null &&
-                attemptUser.equals(this.username)
-                    &&
-                attemptPass.equals(this.password);
+        public boolean loginUser(String attemptUser, String attemptPass){
+        return this.username !=null && attemptUser.equals(this.username) && attemptPass.equals(this.password);
     }
         public String returnLoginStatus(boolean 
                         isLoggedIn){
